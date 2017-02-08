@@ -16,8 +16,7 @@
 **Minimal reproduction of the problem with instructions**
 <!--
 If the current behavior is a bug or you can illustrate your feature request better with an example, 
-please provide the *STEPS TO REPRODUCE* and if possible a *MINIMAL DEMO* of the problem via
-https://plnkr.co or similar (you can use this template as a starting point: http://plnkr.co/edit/tpl:AvJOMERrnz94ekVua0u5).
+please provide the *STEPS TO REPRODUCE*.
 -->
 
 **What is the motivation / use case for changing the behavior?**
