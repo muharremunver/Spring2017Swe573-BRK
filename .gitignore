@@ -14,6 +14,10 @@ hs_err_pid*
 
 # keys #
 /keyz
+/public/node_modules
 
 # folders #
 .idea
+
+# cordova #
+/client/www/*
