@@ -1,0 +1,19 @@
+<div class="page">
+	<!-- Navbar -->
+	<navbar [Text]="header"
+			[LeftButtonIcon]="'trending_flat'"
+			[RightButtonIcon]=""
+			(LeftButtonClick)="clickBackButton($event)">
+	</navbar>	
+
+	<!-- Slider -->
+
+
+	<!-- Comments -->
+  	<ul class="collection place-collection">
+  		<li *ngFor="let comment of comments" (click)="selectComment(comment)" class="collection-item">
+  			{{comment.text}}
+  		</li>
+    </ul>  	
+
+</div>	

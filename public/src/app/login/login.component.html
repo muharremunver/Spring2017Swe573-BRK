@@ -9,8 +9,11 @@
 	<div class="app-name">The Wild</div>
 
 	<!-- Twitter button -->
-	<div>
-		<img src="assets/img/twitter-login.png" class="twitter-button" (click)="login()" />
+	<div class="row twitter-button">
+		<div class="col s10 offset-s1">
+			<img src="assets/img/twitter-login.png" class="full-width"  (click)="login()" />
+		</div>
 	</div>
 
 </div>
+<router-outlet></router-outlet>

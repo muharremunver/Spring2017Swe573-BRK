@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map'
+import { Config } from '../../../../config';
+
 
 
 @Injectable()
@@ -23,14 +25,10 @@ export class ConfigService {
 
  		return new Promise((resolve, reject) => {
 
-			this.http.get('../../../config.json')
-			.map(res => res.json())
-			.subscribe((data) => {
-				
-				this._config = data;
-				resolve(true);
-			});
+			this._config = Config;
+			resolve(true);
  		});
+ 		
  	}
  	
  	/*

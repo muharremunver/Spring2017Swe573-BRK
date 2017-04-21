@@ -19,7 +19,7 @@ export class LoginComponent {
 	 */
 	login() {
 
-		this.http.post('/authenticate', {}, ContentTypes.URLENCODED)
+		this.http.get('/twitter', ContentTypes.URLENCODED)
 			.subscribe(data => {
 
 	            console.log(data);

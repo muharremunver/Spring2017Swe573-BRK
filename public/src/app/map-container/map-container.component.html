@@ -1,0 +1,17 @@
+<div class="map-container">
+	<sebm-google-map 
+		[latitude]="latitude" 
+		[longitude]="longitude"
+		[streetViewControl]="false"
+		[zoomControl]="true"
+		[scaleControl]="false"
+		[disableDefaultUI]="true"
+		(mapClick)="mapClicked($event)">
+
+		<sebm-google-map-marker 
+			[latitude]="latitude" 
+			[longitude]="longitude">
+		</sebm-google-map-marker>
+
+	</sebm-google-map>
+</div>
