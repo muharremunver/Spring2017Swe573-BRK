@@ -1,4 +1,4 @@
-var Place = function(express, config, request){
+var Place = function(express, config, request, Twitter){
 
   var instance;
 
@@ -21,9 +21,9 @@ var Place = function(express, config, request){
         method: 'GET'
       };
 
-      request(options, function(err, resp, body) {  
+      request(options, (error, resp, body) => {  
         
-        if(err) {
+        if(error) {
 
           if(error.stack) {
             
@@ -52,6 +52,40 @@ var Place = function(express, config, request){
         
 
         res.send({code: 200, message:'SUCCESS', data: retVal});  
+        return;
+
+      });
+    });
+
+    // Get tweets of specified place.
+    router.get('/places/:id', (req, res) => {
+
+      var client = new Twitter({
+        consumer_key: config.get('consumerKey'),
+        consumer_secret: config.get('consumerSecret'),
+        access_token_key: config.get('accessToken'),
+        access_token_secret: config.get('refreshToken')
+      });
+
+      var query = 'camping';
+      var geocode = req.query.lat +','+ req.query.long +','+ '3km';
+
+      client.get('search/tweets', {q: query, geocode: geocode}, function(error, tweets, response) {
+        
+        if(error) {
+
+          if(error.stack) {
+            
+            console.log(error.stack);
+            res.send({code:500, message:'FAIL_SYSTEM', data:error.message});
+            return;
+          }
+
+          res.send({code:500, message:'FAIL_SYSTEM', data:error});
+          return;
+        }
+
+        res.send({code: 200, message:'SUCCESS', data: tweets.statuses});  
         return;
 
       });
