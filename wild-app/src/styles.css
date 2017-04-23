@@ -109,6 +109,8 @@ body{
 	height: 2.2rem!important;
 	margin-left: 0!important;
 	padding-left: 2rem!important;
+    margin-right: -20px!important;
+
 }
 .search-container{margin: 0;}
 

@@ -11,7 +11,8 @@
 	  	<li class="collection-item">
 	        <div class="input-field  s12 search-container">
 	        	<i class="material-icons prefix">search</i>
-	          	<input type="text" class="validate search-input" [(ngModel)]="searchValue" placeholder="Search...">
+          	<input type="text" class="validate search-input" [(ngModel)]="searchValue" placeholder="Search...">
+            <i class="material-icons prefix" (click)="searchValue = ''">delete</i>
 	        </div>
 	  	</li>
   		<li *ngFor="let place of _places | search:'name':searchValue" (click)="selectPlace(place)" class="collection-item">
