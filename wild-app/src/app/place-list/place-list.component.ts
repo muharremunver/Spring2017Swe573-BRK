@@ -1,5 +1,8 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PlaceService } from '../services/placeService/place.service';
+import { HttpService, ContentTypes } from '../services/httpService/http.service';
+
 
 
 @Component({
@@ -8,24 +11,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PlaceListComponent {
 
-	latitude: number;
-	longitude: number;
-	places: Array<any> = [
-		{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},
-		{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},{name: 'BRK'},
-		{name: '333'},
-	];
-	tabs: Array<any> = [
-		{text: 'List', header: 'Places'},
-		{text: 'Map', header: 'Map'},
-		{text: 'About', header: 'About'},
-	];
-	activeTab:any = this.tabs[0];
+	private _latitude: number;
+	private _longitude: number;
+	private _tabs: Array<any>;
+	private _activeTab:any;
+	private _places: Array<any>;
+	
 
 	/**
 	 * Ctor.
 	 */
-    constructor( private route: ActivatedRoute, private router: Router) {}
+    constructor( private route: ActivatedRoute, private router: Router, private placeService: PlaceService, 
+    	private httpService: HttpService) {
+    	
+    	this._tabs = [
+			{text: 'List', header: 'Places'},
+			{text: 'Map', header: 'Map'},
+			{text: 'About', header: 'About'},
+		];
+
+		this._activeTab = this._tabs[0];
+    }
 
     /**
      *	On init callback.
@@ -36,9 +42,16 @@ export class PlaceListComponent {
 	      .queryParams
 	      .subscribe(params => {
 	        
-	        this.latitude = Number(params.latitude);
-	        this.longitude = Number(params.longitude);
-	        this.activeTab = this.tabs[0];
+	        this._latitude = Number(params.latitude);
+	        this._longitude = Number(params.longitude);
+	        this._activeTab = this._tabs[0];
+
+	        // Fetch places.
+            let url = '/places?lat=' + this._latitude + '&long=' + this._longitude;
+		    this.httpService.get(url, ContentTypes.JSON).subscribe((result)=> {
+
+		      this._places = result.data;
+		    });
 	    });
 	}
 
@@ -48,8 +61,7 @@ export class PlaceListComponent {
 	 */
 	 clickTab(tab: any) {
 
-	 	this.activeTab = tab;
-
+	 	this._activeTab = tab;
 	 }
 
 	/**
@@ -59,9 +71,11 @@ export class PlaceListComponent {
 
         this.router.navigate(['/place'], {
 			queryParams : { 
-				name: place.name,
-				latitude: this.latitude,
-				longitude: this.longitude
+				placeName: place.name,
+				placeLatitude: place.latitude,
+				placeLongitude: place.longitude,
+				latitude: this._latitude,
+				longitude: this._longitude
 			}
       	});
 	 }

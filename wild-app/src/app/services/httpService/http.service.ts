@@ -8,6 +8,9 @@ import 'rxjs/add/observable/of';
 
 
 @Injectable()
+/**
+ * Service responsible for http calls.
+ */
 export class HttpService {
 
 	public _baseUri: string;
@@ -19,12 +22,8 @@ export class HttpService {
 
 		if(!this._baseUri) {
 
-            this.config.load().then(() => {
-                
-                this._baseUri = config.get('baseUri');    
-            });
-
-			
+            this.config.load();
+            this._baseUri = config.get('baseUri');			
         }
 	}
 

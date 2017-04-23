@@ -8,7 +8,8 @@ const express = require('express'),
 	PassportTwitter = require('passport-twitter').Strategy;
 	Twitter = require('twitter'),
 	passport = require('passport'),
-	expressSession = require('express-session');
+	expressSession = require('express-session'),
+	request = require('request');
 
 // Config
 var config = require(path.join(__dirname, 'server','lib','config', 'config')).getConfig();
@@ -19,12 +20,17 @@ var config = require(path.join(__dirname, 'server','lib','config', 'config')).ge
 	config.set('consumerSecret','Qe17r4oqYlyBRvftcahO9rWzt2ghV2N8bnghctbswPymCJfESC');
 	config.set('twitterCallbackURL', config.get('rootUrl') + '/api/login/twitter/return');
 	config.set('apiSecret', '60dd06aa-cf8e-4cf8-8925-6de720015ebf');
+	config.set('foursquareSecret', '2FOV20XOFIE1YJGDPNCEKK4RXU4DP553JTZVAQ2FCXK5YCIY');
+	config.set('foursquareClient', 'OWLZJ2IEM2OTIBIGPCCLGZTRJJTRZ25U0Z553DA1N3DOG5U3');
 
 // Get API routes
-const api = require('./server/routes/api')(express).getInstance();
+var authRoutes = require('./server/routes/auth/auth')(express).getInstance();
+var palceRoutes = require('./server/routes/place/place')(express, config, request).getInstance();
+
+var api = require('./server/routes/api')(express, authRoutes, palceRoutes).getInstance();
 
 // Get instance of app.
-const app = require('./server/app/app')(express, bodyParser, expressSession, path, api, config).getInstance();
+var app = require('./server/app/app')(express, bodyParser, expressSession, path, api, config).getInstance();
 
 /**
  * Listen on provided port, on all network interfaces.

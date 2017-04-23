@@ -7,9 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PlacePageComponent implements OnInit {
 
-	latitude: number;
-	longitude: number;
-	header: string;
+	private _latitude: number;
+	private _longitude: number;
+	private _place:Object;
 	comments: Array<any> = [
 		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
 		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
@@ -30,9 +30,14 @@ export class PlacePageComponent implements OnInit {
 	      .queryParams
 	      .subscribe(params => {
 	        
-	        this.latitude = Number(params.latitude);
-	        this.longitude = Number(params.longitude);
-	        this.header = params.name;
+	        this._latitude = Number(params.latitude);
+	        this._longitude = Number(params.longitude);
+	        this._place = {
+				name: params.placeName,
+				latitude: params.placeLatitude,
+				longitude: params.placeLongitude
+	        };
+	        
 	    });
 	}
 
@@ -43,8 +48,8 @@ export class PlacePageComponent implements OnInit {
 
         this.router.navigate(['/places'], {
     		queryParams : { 
-    			latitude: this.latitude,
-    			longitude: this.longitude 
+    			latitude: this._latitude,
+    			longitude: this._longitude 
     		}
       	});
 	}

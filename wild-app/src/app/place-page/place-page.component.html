@@ -1,6 +1,6 @@
 <div class="page">
 	<!-- Navbar -->
-	<navbar [Text]="header"
+	<navbar [Text]="_place.name"
 			[LeftButtonIcon]="'trending_flat'"
 			[isTweetEnabled]="true"
 			(LeftButtonClick)="clickBackButton($event)"

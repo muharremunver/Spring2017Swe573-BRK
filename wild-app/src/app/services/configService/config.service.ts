@@ -5,8 +5,10 @@ import 'rxjs/add/operator/map'
 import { Config } from '../../../../config';
 
 
-
 @Injectable()
+/**
+ *	Service for config.
+ */
 export class ConfigService {
 
 	private _config: Object;
@@ -23,12 +25,7 @@ export class ConfigService {
  	 */
  	public load() {
 
- 		return new Promise((resolve, reject) => {
-
-			this._config = Config;
-			resolve(true);
- 		});
- 		
+		this._config = Config;
  	}
  	
  	/*

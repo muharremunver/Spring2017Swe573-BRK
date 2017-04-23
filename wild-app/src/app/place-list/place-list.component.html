@@ -1,35 +1,35 @@
 <div class="page">
 	<!-- Navbar -->
-	<navbar [Text]="activeTab.header"
+	<navbar [Text]="_activeTab.header"
 			[LeftButtonIcon]="'trending_flat'"
 			[RightButtonIcon]=""
 			[IsLeftButtonVisible]="false">
 	</navbar>	
 
 	<!-- List -->
-  	<ul class="collection place-collection flex-content" *ngIf="activeTab.text == 'List'">
+  	<ul class="collection place-collection flex-content" *ngIf="_activeTab.text == 'List'">
 	  	<li class="collection-item">
-	        <div class="input-field  s12" style="margin: 0;">
+	        <div class="input-field  s12 search-container">
 	        	<i class="material-icons prefix">search</i>
 	          	<input type="text" class="validate search-input" placeholder="Search...">
 	        </div>
 	  	</li>
-  		<li *ngFor="let place of places" (click)="selectPlace(place)" class="collection-item">
+  		<li *ngFor="let place of _places" (click)="selectPlace(place)" class="collection-item">
   			{{place.name}}
   		</li>
     </ul>
 
     <!-- Map -->
-    <div *ngIf="activeTab.text == 'Map'" class="flex-content">
+    <div *ngIf="_activeTab.text == 'Map'" class="flex-content">
     	<app-map 
-    		[(latitude)]="latitude" 
-    		[(longitude)]="longitude">
+    		[(latitude)]="_latitude" 
+    		[(longitude)]="_longitude">
     	</app-map>
     </div>
 
 
     <!-- About -->
-    <div *ngIf="activeTab.text == 'About'" class="flex-content">
+    <div *ngIf="_activeTab.text == 'About'" class="flex-content">
     	<about></about>
     </div>
 
@@ -38,7 +38,7 @@
     <footer>
   		<div class="col s12">
   			<ul class="tabs">
-  				<li *ngFor="let tab of tabs" class="tab col s4">
+  				<li *ngFor="let tab of _tabs" class="tab col s4">
   					<a href="javascript:void(0);" (click)="clickTab(tab)">
   						{{tab.text}}
 					</a>

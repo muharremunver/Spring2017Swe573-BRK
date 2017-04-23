@@ -6,7 +6,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class MapContainerComponent {
 
-
 	private _latitude: number;
 	private _longitude: number;
 
@@ -48,6 +47,5 @@ export class MapContainerComponent {
 
       	this.latitude = $event['coords'].lat,
       	this.longitude = $event['coords'].lng
-
   	}	
 }

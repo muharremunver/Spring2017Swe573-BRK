@@ -7,23 +7,4 @@ import { HttpService, ContentTypes } from '../services/httpService/http.service'
 })
 export class LoginComponent {
 
-	/*
-	 *	Ctor.
-	 */
-	constructor(private http: HttpService) {
-
-	}
-
-	/*
-	 *	Authenticates user to Twitter.
-	 */
-	login() {
-
-		this.http.post('/connect/twitter',{}, ContentTypes.URLENCODED)
-			.subscribe(data => {
-
-	            console.log(data);
-    	    });
-	}
-
 }

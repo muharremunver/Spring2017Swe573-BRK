@@ -8,7 +8,7 @@
 		<ul class="left">
         	<li [hidden]="!IsLeftButtonVisible">
         		<a href="javascript:void(0);" (click)="clickLeftButton()">
-			      <i class="material-icons" style="transform:rotate(180deg)">{{LeftButtonIcon}}</i>
+			      <i class="material-icons left-icon">{{LeftButtonIcon}}</i>
     			</a>
 			</li>
       	</ul>
@@ -21,7 +21,6 @@
     			<a *ngIf="isTweetEnabled" class="brand-logo nav-btn-container">
     				<img src="assets/img/twitter-logo.png" class="circle responsive-img nav-btn" />
     			</a>
-    			
 			</li>
       	</ul>
     </div>

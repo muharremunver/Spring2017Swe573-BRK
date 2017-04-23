@@ -1,4 +1,4 @@
-var Router = function(express){
+var Router = function(express, authRoutes, palceRoutes){
 
 	var instance;
 
@@ -10,7 +10,9 @@ var Router = function(express){
   			res.send({code:200, message: 'I am alive'});
 		});
 
-		router.use('/', require('./auth/auth')(express).getInstance());
+		// Inject external routes.
+		router.use('/', authRoutes);
+		router.use('/', palceRoutes);
 
 		return router;
 	};

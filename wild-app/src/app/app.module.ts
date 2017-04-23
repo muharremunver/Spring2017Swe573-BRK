@@ -21,6 +21,7 @@ import { ProfileComponent } from './profile/profile.component';
 //Services
 import { HttpService } from './services/httpService/http.service';
 import { ConfigService } from './services/configService/config.service';
+import { PlaceService } from './services/placeService/place.service';
 
 
 
@@ -51,6 +52,7 @@ import { ConfigService } from './services/configService/config.service';
   providers: [
     ConfigService,
     HttpService,
+    PlaceService,
     {provide: APP_BASE_HREF, useValue : '/' }
 
   ],
