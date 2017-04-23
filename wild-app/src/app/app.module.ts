@@ -23,6 +23,9 @@ import { HttpService } from './services/httpService/http.service';
 import { ConfigService } from './services/configService/config.service';
 import { PlaceService } from './services/placeService/place.service';
 
+//Pipes
+import { SearchPipe } from './pipes/search/search.pipe';
+
 
 
 
@@ -39,6 +42,7 @@ import { PlaceService } from './services/placeService/place.service';
     AboutComponent,
     PlacePageComponent,
     ProfileComponent,
+    SearchPipe,
   ],
   imports: [
     BrowserModule,

@@ -2,12 +2,12 @@ import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlaceService } from '../services/placeService/place.service';
 import { HttpService, ContentTypes } from '../services/httpService/http.service';
-
+import { SearchPipe } from '../pipes/search/search.pipe'
 
 
 @Component({
   selector: 'app-place-list',
-  templateUrl: './place-list.component.html',
+  templateUrl: './place-list.component.html'
 })
 export class PlaceListComponent {
 

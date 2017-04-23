@@ -15,7 +15,7 @@ const express = require('express'),
 var config = require(path.join(__dirname, 'server','lib','config', 'config')).getConfig();
 	config.set('rootPath', __dirname);
 	config.set('port', 3000);
-	config.set('rootUrl','http://localhost:' + config.get('port'));
+	config.set('rootUrl','http://127.0.0.1:' + config.get('port'));
 	config.set('consumerKey', 'xqnQeoqwxGIS7lpdhJ1UdGc5p');
 	config.set('consumerSecret','Qe17r4oqYlyBRvftcahO9rWzt2ghV2N8bnghctbswPymCJfESC');
 	config.set('twitterCallbackURL', config.get('rootUrl') + '/api/login/twitter/return');

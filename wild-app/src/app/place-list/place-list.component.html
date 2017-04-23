@@ -11,10 +11,10 @@
 	  	<li class="collection-item">
 	        <div class="input-field  s12 search-container">
 	        	<i class="material-icons prefix">search</i>
-	          	<input type="text" class="validate search-input" placeholder="Search...">
+	          	<input type="text" class="validate search-input" [(ngModel)]="searchValue" placeholder="Search...">
 	        </div>
 	  	</li>
-  		<li *ngFor="let place of _places" (click)="selectPlace(place)" class="collection-item">
+  		<li *ngFor="let place of _places | search:'name':searchValue" (click)="selectPlace(place)" class="collection-item">
   			{{place.name}}
   		</li>
     </ul>
