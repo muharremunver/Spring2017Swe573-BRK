@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlaceService } from '../services/placeService/place.service';
 import { HttpService, ContentTypes } from '../services/httpService/http.service';
 import { SearchPipe } from '../pipes/search/search.pipe'
-
+import { SpinnerService } from '../services/spinnerService/spinner.service';
 
 @Component({
   selector: 'app-place-list',
@@ -22,7 +22,7 @@ export class PlaceListComponent {
 	 * Ctor.
 	 */
     constructor( private route: ActivatedRoute, private router: Router, private placeService: PlaceService, 
-    	private httpService: HttpService) {
+    	private httpService: HttpService, private spinner: SpinnerService) {
     	
     	this._tabs = [
 			{text: 'List', header: 'Places'},
@@ -42,6 +42,7 @@ export class PlaceListComponent {
 	      .queryParams
 	      .subscribe(params => {
 	        
+	        this.spinner.show();
 	        this._latitude = Number(params.latitude);
 	        this._longitude = Number(params.longitude);
 	        this._activeTab = this._tabs[0];
@@ -51,6 +52,7 @@ export class PlaceListComponent {
 		    this.httpService.get(url, ContentTypes.JSON).subscribe((result)=> {
 
 		      this._places = result.data;
+		      this.spinner.hide();
 		    });
 	    });
 	}

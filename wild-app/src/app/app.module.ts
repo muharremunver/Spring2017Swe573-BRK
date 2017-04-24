@@ -22,9 +22,11 @@ import { ProfileComponent } from './profile/profile.component';
 import { HttpService } from './services/httpService/http.service';
 import { ConfigService } from './services/configService/config.service';
 import { PlaceService } from './services/placeService/place.service';
+import { SpinnerService } from './services/spinnerService/spinner.service';
 
 //Pipes
 import { SearchPipe } from './pipes/search/search.pipe';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -43,6 +45,7 @@ import { SearchPipe } from './pipes/search/search.pipe';
     PlacePageComponent,
     ProfileComponent,
     SearchPipe,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,7 @@ import { SearchPipe } from './pipes/search/search.pipe';
     ConfigService,
     HttpService,
     PlaceService,
+    SpinnerService,
     {provide: APP_BASE_HREF, useValue : '/' }
 
   ],

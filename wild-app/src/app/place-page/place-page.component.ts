@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SpinnerService } from '../services/spinnerService/spinner.service';
 
 @Component({
   selector: 'app-place-page',
@@ -19,7 +20,7 @@ export class PlacePageComponent implements OnInit {
 	/**
 	 * Ctor.
 	 */
-    constructor( private route: ActivatedRoute, private router: Router) {}
+    constructor( private route: ActivatedRoute, private router: Router, private spinner: SpinnerService) {}
 
     /**
      *	On init callback.
@@ -30,6 +31,7 @@ export class PlacePageComponent implements OnInit {
 	      .queryParams
 	      .subscribe(params => {
 	        
+	        this.spinner.show();
 	        this._latitude = Number(params.latitude);
 	        this._longitude = Number(params.longitude);
 	        this._place = {
@@ -37,7 +39,7 @@ export class PlacePageComponent implements OnInit {
 				latitude: params.placeLatitude,
 				longitude: params.placeLongitude
 	        };
-	        
+	        this.spinner.hide();
 	    });
 	}
 
