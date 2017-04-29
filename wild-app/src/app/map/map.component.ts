@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { Router} from '@angular/router';
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import { MapContainerComponent } from '../map-container/map-container.component'
 
 
 @Component({
@@ -8,6 +9,9 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
   templateUrl: './map.component.html'
 })
 export class MapComponent {
+
+  //Map element.
+  @ViewChild(MapContainerComponent) _map;
 
   /**
    *  Inputs
@@ -41,4 +45,12 @@ export class MapComponent {
       		}
     	});
 	}
+
+  /**
+   * Fired after view init.
+   */
+  ngAfterViewInit(){
+
+    this._map.setCurrentPosition();
+  }
 }

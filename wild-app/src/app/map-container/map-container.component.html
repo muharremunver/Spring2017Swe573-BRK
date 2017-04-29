@@ -1,4 +1,11 @@
 <div class="map-container">
+	<div class="form-group">
+		<div class="input-field  s12 search-container map-search">
+			<i class="material-icons prefix">search</i>
+          	<input type="text" class="validate search-input" [(ngModel)]="searchValue" placeholder="Search...">
+            <i class="material-icons prefix" (click)="searchValue = ''" *ngIf="searchValue">close</i>
+        </div>
+  	</div>
 	<sebm-google-map 
 		[latitude]="latitude" 
 		[longitude]="longitude"

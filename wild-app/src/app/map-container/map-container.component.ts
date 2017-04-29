@@ -1,4 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, NgZone } from '@angular/core';
+import { AgmCoreModule, MapsAPILoader } from 'angular2-google-maps/core';
+
 
 @Component({
   selector: 'map-container',
@@ -38,14 +40,41 @@ export class MapContainerComponent {
 	@Output() latitudeChange: EventEmitter<number> = new EventEmitter<number>();
 	@Output() longitudeChange: EventEmitter<number> = new EventEmitter<number>();
 
+  /**
+   *  Ctor.
+   */
+  constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone){
 
+  }
 
-  	/**
-  	 *	Triggered when map clicked.
-  	 */
-	mapClicked($event: MouseEvent) {
+	/**
+	 *	Triggered when map clicked.
+	 */
+	private mapClicked($event: MouseEvent) {
 
       	this.latitude = $event['coords'].lat,
       	this.longitude = $event['coords'].lng
-  	}	
+  	}
+
+	/**
+	 *	Sets current location of user to pin on map.
+	 */
+	public setCurrentPosition() {
+
+    	if ("geolocation" in navigator) {
+      		
+      		navigator.geolocation.getCurrentPosition((position) => {
+
+        		this._latitude = position.coords.latitude;
+        		this._longitude = position.coords.longitude;
+      		}
+  		);
+    }
+  }
+
+  ngOnInit() {
+
+    
+
+  }	
 }
