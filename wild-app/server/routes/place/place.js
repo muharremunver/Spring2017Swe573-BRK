@@ -1,4 +1,4 @@
-var Place = function(express, config, request, Twitter){
+var PlaceRoute = function(express, config, request, Twitter){
 
   var instance;
 
@@ -58,7 +58,7 @@ var Place = function(express, config, request, Twitter){
     });
 
     // Get tweets of specified place.
-    router.get('/places/:id', (req, res) => {
+    router.get('/places/detail/', (req, res) => {
 
       var client = new Twitter({
         consumer_key: config.get('consumerKey'),
@@ -68,7 +68,8 @@ var Place = function(express, config, request, Twitter){
       });
 
       var query = '';
-      var geocode = req.query.lat +','+ req.query.long +','+ '3km';
+      //var geocode = req.query.lat +','+ req.query.long +','+ '3km';
+      var geocode = 40.51501335189529 +','+ 29.2840576171875 +','+ '3km';
 
       client.get('search/tweets', {q: query, geocode: geocode}, function(error, tweets, response) {
         
@@ -84,7 +85,7 @@ var Place = function(express, config, request, Twitter){
           res.send({code:500, message:'FAIL_SYSTEM', data:error});
           return;
         }
-console.log(tweets)
+
         res.send({code: 200, message:'SUCCESS', data: tweets.statuses});  
         return;
 
@@ -109,4 +110,4 @@ console.log(tweets)
 
 };
 
-module.exports = exports = Place;
+module.exports = exports = PlaceRoute;

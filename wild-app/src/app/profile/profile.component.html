@@ -1,6 +1,6 @@
 <div class="page">
 	<!-- Navbar -->
-	<navbar [Text]="fullName"
+	<navbar [Text]="_fullName"
 			[LeftButtonIcon]="'trending_flat'"
 			[RightButtonIcon]=""
 			(LeftButtonClick)="clickBackButton($event)">
@@ -13,24 +13,26 @@
     			<div class="row valign-wrapper">
 					<!-- profile pic. -->
             		<div class="col s5">
-            			<img src="{{profilePic}}" 
-  							class="circle responsive-img">
+            			<img src="{{_profilePic}}" class="circle responsive-img">
             		</div>
             		<!-- Texts -->
             		<div class="col s7">
             			<span>
-            				<strong>{{fullName}}</strong>
-        				</span>
-            			<span>{{userName}}</span>
-            			<span>{{webSite}}</span>
-            			<span>
+            				<strong>{{_fullName}}</strong>
+        				  </span>
+                  <br/>
+            			<span>{{_userName}}</span>
+                  <br/>
+            			<span>{{_webSite}}</span>
+                  <br/>
+            			<span (click)="followUser()">
             				<img src="assets/img/followbutton.png" style="width: 40%;"/>
             			</span>
             		</div>
           		</div>
       		</div>
   		</li>
-  		<li *ngFor="let comment of comments" class="collection-item">
+  		<li *ngFor="let comment of _comments" class="collection-item">
   			{{comment.text}}
   		</li>
     </ul>

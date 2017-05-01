@@ -18,7 +18,7 @@
         		<a *ngIf="!isTweetEnabled" href="javascript:void(0);" (click)="clickRightButton()">
         			{{RightButtonIcon}}
     			</a>
-    			<a *ngIf="isTweetEnabled" class="brand-logo nav-btn-container">
+    			<a *ngIf="isTweetEnabled" class="brand-logo nav-btn-container" (click)="clickRightButton()">
     				<img src="assets/img/twitter-logo.png" class="circle responsive-img nav-btn" />
     			</a>
 			</li>

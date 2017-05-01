@@ -30,6 +30,7 @@ import { SpinnerService } from './services/spinnerService/spinner.service';
 //Pipes
 import { SearchPipe } from './pipes/search/search.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { TweetPopupComponent } from './tweet-popup/tweet-popup.component';
 
 // Hammer js config
 export class MyHammerConfig extends HammerGestureConfig  {
@@ -53,7 +54,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     ProfileComponent,
     SearchPipe,
     SpinnerComponent,
-    SliderComponent
+    SliderComponent,
+    TweetPopupComponent
   ],
   imports: [
     BrowserModule,

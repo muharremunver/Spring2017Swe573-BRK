@@ -1,4 +1,4 @@
-var Auth = function(express){
+var AuthRoute = function(express){
 
   var instance;
 
@@ -34,4 +34,4 @@ var Auth = function(express){
 
 };
 
-module.exports = exports = Auth;
+module.exports = exports = AuthRoute;

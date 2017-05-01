@@ -26,8 +26,9 @@ var config = require(path.join(__dirname, 'server','lib','config', 'config')).ge
 // Get API routes
 var authRoutes = require('./server/routes/auth/auth')(express).getInstance();
 var palceRoutes = require('./server/routes/place/place')(express, config, request, Twitter).getInstance();
+var twitterRoutes = require('./server/routes/twitter/twitter')(express, Twitter, config).getInstance();
 
-var api = require('./server/routes/api')(express, authRoutes, palceRoutes).getInstance();
+var api = require('./server/routes/api')(express, authRoutes, palceRoutes, twitterRoutes).getInstance();
 
 // Get instance of app.
 var app = require('./server/app/app')(express, bodyParser, expressSession, path, api, config).getInstance();

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerService } from '../services/spinnerService/spinner.service';
-
+import { HttpService, ContentTypes } from '../services/httpService/http.service';
 
 @Component({
   selector: 'app-place-page',
@@ -12,12 +12,8 @@ export class PlacePageComponent implements OnInit {
 	private _latitude: number;
 	private _longitude: number;
 	private _place:Object;
-	comments: Array<any> = [
-		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
-		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
-		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
-	];
-	images: Array<any> = [
+	private _comments: Array<any> = [];
+	private _images: Array<any> = [
 		{
 			src: "http://babylon.com.tr/content/images/proxy-images/kilyos-galeri-40.jpg",             
 			visible: true
@@ -28,11 +24,14 @@ export class PlacePageComponent implements OnInit {
 		}
 	];
 
+	private _isTweetPopupVisible:boolean;
+
 
 	/**
 	 * Ctor.
 	 */
-    constructor( private route: ActivatedRoute, private router: Router, private spinner: SpinnerService) {}
+    constructor( private route: ActivatedRoute, private router: Router, private spinner: SpinnerService, 
+    	private httpService: HttpService) {}
 
     /**
      *	On init callback.
@@ -52,7 +51,15 @@ export class PlacePageComponent implements OnInit {
 				longitude: params.placeLongitude
 	        };
 
-	        this.spinner.hide();
+	        // Get tweets
+	        let url = '/places/detail?lat=' + this._latitude + 'long=' + this._longitude;
+    		this.httpService.get(url, ContentTypes.JSON).subscribe((result)=> {
+    			
+    			if(result.code == 200)
+    				this._comments = result.data;
+
+      			this.spinner.hide();
+	    	});
 	    });
 	}
 
@@ -69,4 +76,41 @@ export class PlacePageComponent implements OnInit {
       	});
 	}
 
+	/**
+	 *	Triggered when twitter icon is clicked.
+	 */
+	clickTweetButton(){
+
+		this._isTweetPopupVisible = !this._isTweetPopupVisible;
+	}
+
+	/**
+	 *	Triggered when send tweet button is clicked.
+	 */
+	sendTweet(text){
+
+        let url = '/twitter/send';
+        let body = {
+        	text: text
+        }
+
+        this.clickTweetButton();
+        this.spinner.show();
+	    this.httpService.post(url, body, ContentTypes.JSON).subscribe((result)=> {
+
+      		this.spinner.hide();
+	    });
+	}
+
+	/**
+	 *	Triggered when a comment from list is selected.
+	 */
+	selectComment(tweet){
+
+		this.router.navigate(['/profile'], {
+			queryParams: {
+				userID: tweet.user.id
+			}
+		});
+	}	
 }

@@ -5,6 +5,7 @@ import { HttpService, ContentTypes } from '../services/httpService/http.service'
 import { SearchPipe } from '../pipes/search/search.pipe'
 import { SpinnerService } from '../services/spinnerService/spinner.service';
 
+
 @Component({
   selector: 'app-place-list',
   templateUrl: './place-list.component.html'

@@ -1,4 +1,4 @@
-var Router = function(express, authRoutes, palceRoutes){
+var Router = function(express, authRoutes, palceRoutes, twitterRoutes){
 
 	var instance;
 
@@ -13,6 +13,7 @@ var Router = function(express, authRoutes, palceRoutes){
 		// Inject external routes.
 		router.use('/', authRoutes);
 		router.use('/', palceRoutes);
+		router.use('/', twitterRoutes);
 
 		return router;
 	};
