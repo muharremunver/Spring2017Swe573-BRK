@@ -13,7 +13,7 @@
 					(sendTweetChange)="sendTweet($event)"></tweet-popup>
 
 	<!-- Slider -->
-     <slider [Content]="_images"></slider>
+     <slider [Content]="_images" *ngIf='_images.length > 0'></slider>
 
 	<!-- Comments -->
   	<ul class="collection place-collection">

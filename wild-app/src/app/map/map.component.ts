@@ -1,5 +1,5 @@
 import { Component, Input, AfterViewInit, ViewChild } from '@angular/core';
-import { Router} from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { MapContainerComponent } from '../map-container/map-container.component'
 
@@ -22,7 +22,7 @@ export class MapComponent {
 	/**
 	 *	Ctor.
 	 */
-	constructor(private router: Router) {}
+	constructor(private router: Router, private route: ActivatedRoute, ) {}
 
 	/**
 	 *	Triggered when map clicked.

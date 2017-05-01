@@ -9,6 +9,13 @@ var PlaceRoute = function(express, config, request, Twitter){
     // Get list of places with specified location.
     router.get('/places', (req, res) => {
 
+      if(!req.query.lat || !req.query.long) {
+
+        res.send({code:500, message:'Place location must be provided!'});
+        return;
+      }
+
+
       var foursquareURL = 'https://api.foursquare.com/v2/venues/search';
       foursquareURL += '?ll=' + req.query.lat +','+ req.query.long;
       foursquareURL += '&intent=browse&radius=5000&limit=75&categoryId=4bf58dd8d48988d1e4941735';
@@ -68,9 +75,7 @@ var PlaceRoute = function(express, config, request, Twitter){
       });
 
       var query = '';
-      //var geocode = req.query.lat +','+ req.query.long +','+ '3km';
-      var geocode = 40.51501335189529 +','+ 29.2840576171875 +','+ '3km';
-
+      var geocode = req.query.lat +','+ req.query.long +','+ '5km';
       client.get('search/tweets', {q: query, geocode: geocode}, function(error, tweets, response) {
         
         if(error) {
@@ -86,7 +91,48 @@ var PlaceRoute = function(express, config, request, Twitter){
           return;
         }
 
-        res.send({code: 200, message:'SUCCESS', data: tweets.statuses});  
+        // make refinement
+        var tweets = JSON.parse(response.body).statuses;
+        var retVal = {tweets: tweets, media: []};
+
+        tweets.forEach((item) =>{
+
+          // check twitter images
+          if(item.entities && item.entities.media && item.entities.media.length > 0) {
+
+            item.entities.media.forEach((media) => {
+
+              retVal.media.push({
+                src: media.media_url,
+                visible: false
+              });
+
+            });
+
+          } 
+          // check instagram photos
+/*          else if (item.source && item.source.indexOf('instagram.com') != -1){
+
+            if(item.entities && item.entities.urls && item.entities.urls.length > 0){
+
+              item.entities.urls.forEach((media) => {
+
+                if(media.expanded_url.indexOf('instagram.com') != -1){
+
+                  retVal.media.push({
+                    src: media.expanded_url,
+                    visible: false
+                  });
+                }
+
+              });
+
+            }
+          }
+*/
+        });
+
+        res.send({code: 200, message:'SUCCESS', data: retVal});  
         return;
 
       });

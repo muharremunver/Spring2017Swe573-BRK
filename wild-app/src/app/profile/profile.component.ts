@@ -10,12 +10,7 @@ import { HttpService, ContentTypes } from '../services/httpService/http.service'
 })
 export class ProfileComponent {
 
-	private _comments: Array<any> = [
-		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
-		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
-		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
-		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
-	];
+	private _comments: Array<any> = [];
 	private _userID:number;
 	private _place:Object;
 
@@ -44,12 +39,14 @@ export class ProfileComponent {
 	        this._place = {
 				name: params.placeName,
 				latitude: params.placeLatitude,
-				longitude: params.placeLongitude
+				longitude: params.placeLongitude,
+				locationLatitude: params.latitude,
+				locationLongitude: params.longitude
 	        };
 
 	        // Get profile
-	        let url = '/twitter/profile?id=' + this._userID;
-    		this.httpService.get(url, ContentTypes.JSON).subscribe((result)=> {
+	        let profileUrl = '/twitter/profile?id=' + this._userID;
+    		this.httpService.get(profileUrl, ContentTypes.JSON).subscribe((result)=> {
     			
     			if(result.code == 200) {
 
@@ -60,8 +57,18 @@ export class ProfileComponent {
     								: '';
     				this._profilePic = result.data.profile_background_image_url;
 
+    				let tweetUrl = '/twitter/profile/tweets?id=' + this._userID;
+    				this.httpService.get(tweetUrl, ContentTypes.JSON).subscribe((result) => {
+
+    					if(result.code == 200){
+    						this._comments = result.data;
+    						this.spinner.hide();
+    					}
+
+    				});
+
+
     			}
-      			this.spinner.hide();
 	    	});
 	    });
 	}	
@@ -90,9 +97,11 @@ export class ProfileComponent {
 	clickBackButton() {
         this.router.navigate(['/place'], {
     		queryParams : { 
-    			latitude: this._place['latitude'],
-    			longitude: this._place['longitude'],
-    			name: this._place['name']
+    			placeName: this._place['name'],
+    			placeLatitude: this._place['latitude'],
+    			placeLongitude: this._place['longitude'],
+    			latitude: this._place['locationLatitude'],
+    			longitude: this._place['locationLongitude']
     		}
       	});
 	}

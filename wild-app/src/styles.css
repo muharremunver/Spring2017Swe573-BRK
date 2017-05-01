@@ -97,7 +97,7 @@ body{
 }
 .slider-item{
 	width: 80%;
-	height: auto;
+	height: 250px;
 	margin-left: 10%;
 	margin-top: 5%;
 }
@@ -190,6 +190,7 @@ body{
 .about-logo{width:90%;}
 .about-name{font-size: 2.4rem}
 .about-content{font-size: 1.2rem;}
+.follow-button{width: 40%;}
 
 
 

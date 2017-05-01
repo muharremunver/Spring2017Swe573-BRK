@@ -88,6 +88,67 @@ var TwitterRoute = function(express, Twitter, config){
 
     });
 
+    // Gets tweets of specified user.
+    router.get('/twitter/profile/tweets', (req, res) => {
+
+      if(!req.query.id) {
+
+        res.send({code:500, message:'User id must be provided!'});
+        return;
+      }
+
+      var client = new Twitter({
+        consumer_key: config.get('consumerKey'),
+        consumer_secret: config.get('consumerSecret'),
+        access_token_key: config.get('accessToken'),
+        access_token_secret: config.get('refreshToken')
+      });
+
+      var query = {
+        include_entities: true,
+        include_rts: true,
+        user_id: req.query.id
+      }
+
+      client.get('statuses/user_timeline', query, function(error, tweets, response) {
+    
+        if(error) {
+
+          if(error.stack) {
+            
+            console.log(error.stack);
+            res.send({code:500, message:'FAIL_SYSTEM', data:error.message});
+            return;
+          }
+
+          if(response.body.code == 50) {
+
+            res.send({code:404, message:'USER_NOT_FOUND'});
+            return; 
+          }
+
+          res.send({code:500, message:'FAIL_SYSTEM', data:error});
+          return;
+        }
+
+
+        // filter tweets including camping keywords
+        var retval = [];
+
+        tweets.forEach((item) => {
+
+          if(item.text.indexOf('kamp') != -1)
+            retval.push(item);
+        });
+
+
+        res.send({code: 200, message:'SUCCESS', data:retval});  
+        return;
+
+      });
+
+    });
+
     // Follow user.
     router.post('/twitter/follow', (req, res) => {
 
