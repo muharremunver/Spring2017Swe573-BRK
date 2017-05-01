@@ -1,0 +1,12 @@
+<div class="slider-container"
+	*ngFor="let image of Content; let idx=index"
+    (swipeleft)="swipe(idx, $event.type)"
+    (swiperight)="swipe(idx, $event.type)" 
+	[hidden]="!image.visible">
+	<div>
+        <img class="slider-item" [src]="image.src">
+    </div>
+	<div class="slider-count">
+		{{idx+1}} of {{Content.length}}
+	</div>
+</div>

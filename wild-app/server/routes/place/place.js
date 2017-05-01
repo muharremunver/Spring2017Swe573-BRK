@@ -67,7 +67,7 @@ var Place = function(express, config, request, Twitter){
         access_token_secret: config.get('refreshToken')
       });
 
-      var query = 'camping';
+      var query = '';
       var geocode = req.query.lat +','+ req.query.long +','+ '3km';
 
       client.get('search/tweets', {q: query, geocode: geocode}, function(error, tweets, response) {
@@ -84,7 +84,7 @@ var Place = function(express, config, request, Twitter){
           res.send({code:500, message:'FAIL_SYSTEM', data:error});
           return;
         }
-
+console.log(tweets)
         res.send({code: 200, message:'SUCCESS', data: tweets.statuses});  
         return;
 

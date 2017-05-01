@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerService } from '../services/spinnerService/spinner.service';
 
+
 @Component({
   selector: 'app-place-page',
   templateUrl: './place-page.component.html'
@@ -16,6 +17,17 @@ export class PlacePageComponent implements OnInit {
 		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
 		{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},{text: 'BRK'},
 	];
+	images: Array<any> = [
+		{
+			src: "http://babylon.com.tr/content/images/proxy-images/kilyos-galeri-40.jpg",             
+			visible: true
+		},
+		{
+			src:'https://cdn.getyourguide.com/niwziy2l9cvz/3Nl5nGC5fq2CQ0O42awIwq/0cff0ba6cc53c2e0f9c153e820fcc8d0/berlin-Brandenburg-Gate-1112x630.jpg',
+            visible: false
+		}
+	];
+
 
 	/**
 	 * Ctor.
@@ -39,6 +51,7 @@ export class PlacePageComponent implements OnInit {
 				latitude: params.placeLatitude,
 				longitude: params.placeLongitude
 	        };
+
 	        this.spinner.hide();
 	    });
 	}

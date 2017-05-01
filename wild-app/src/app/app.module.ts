@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { routes } from './app.routes';
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
 
 
 // Components
@@ -17,6 +19,7 @@ import { MapContainerComponent } from './map-container/map-container.component';
 import { AboutComponent } from './about/about.component';
 import { PlacePageComponent } from './place-page/place-page.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SliderComponent } from './slider/slider.component';
 
 //Services
 import { HttpService } from './services/httpService/http.service';
@@ -28,8 +31,12 @@ import { SpinnerService } from './services/spinnerService/spinner.service';
 import { SearchPipe } from './pipes/search/search.pipe';
 import { SpinnerComponent } from './spinner/spinner.component';
 
-
-
+// Hammer js config
+export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+      'swipe': {velocity: 0.4, threshold: 20}
+  }
+}
 
 
 
@@ -46,6 +53,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     ProfileComponent,
     SearchPipe,
     SpinnerComponent,
+    SliderComponent
   ],
   imports: [
     BrowserModule,
@@ -61,8 +69,11 @@ import { SpinnerComponent } from './spinner/spinner.component';
     HttpService,
     PlaceService,
     SpinnerService,
-    {provide: APP_BASE_HREF, useValue : '/' }
-
+    {provide: APP_BASE_HREF, useValue : '/' },
+    { 
+      provide: HAMMER_GESTURE_CONFIG, 
+      useClass: MyHammerConfig 
+    }
   ],
   bootstrap: [AppComponent]
 })
