@@ -5,8 +5,8 @@ var TwitterMiddleware = function(config, Twitter){
   function init() {
 
     var client = new Twitter({
-      consumer_key: config.get('consumerKey'),
-      consumer_secret: config.get('consumerSecret'),
+      consumer_key: config.get('twitterConsumerKey'),
+      consumer_secret: config.get('twitterConsumerSecret'),
       access_token_key: config.get('accessToken'),
       access_token_secret: config.get('refreshToken')
     });

@@ -28,7 +28,7 @@ var App = function(express, bodyParser, expressSession, path, api, config){
 		 *	Configure session.
 		 */
 		var session = expressSession( {
-  			secret: config.get('apiSecret'),
+  			secret: config.get('twitterApiSecret'),
   			resave: false,
   			saveUninitialized: false,
   			name: 'sid'
@@ -39,8 +39,8 @@ var App = function(express, bodyParser, expressSession, path, api, config){
 		app.use(passportSession);
 
 		passport.use( new PassportTwitter( {
-			consumerKey: config.get('consumerKey'),
-			consumerSecret: config.get('consumerSecret'),
+			consumerKey: config.get('twitterConsumerKey'),
+			consumerSecret: config.get('twitterConsumerSecret'),
 			callbackURL: config.get('twitterCallbackURL')
 		},
 		(accessToken, refreshToken, profile, cb ) => {

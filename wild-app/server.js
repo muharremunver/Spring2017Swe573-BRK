@@ -9,19 +9,21 @@ const express = require('express'),
 	Twitter = require('twitter'),
 	passport = require('passport'),
 	expressSession = require('express-session'),
-	request = require('request');
+	request = require('request'),
+	keyz = require('../keyz.json');
 
 // Config
 var config = require(path.join(__dirname, 'server','lib','config', 'config')).getConfig();
 	config.set('rootPath', __dirname);
+	config.set('baseUri', keyz.BaseUri);
 	config.set('port', 3000);
-	config.set('rootUrl','http://127.0.0.1:' + config.get('port'));
-	config.set('consumerKey', 'xqnQeoqwxGIS7lpdhJ1UdGc5p');
-	config.set('consumerSecret','Qe17r4oqYlyBRvftcahO9rWzt2ghV2N8bnghctbswPymCJfESC');
+	config.set('rootUrl', config.get('baseUri') +':' + config.get('port'));
+	config.set('twitterConsumerKey', keyz.Twitter.API_KEY);
+	config.set('twitterConsumerSecret', keyz.Twitter.API_SECRET);
+	config.set('twitterApiSecret', keyz.Twitter.API_SECRET);
 	config.set('twitterCallbackURL', config.get('rootUrl') + '/api/login/twitter/return');
-	config.set('apiSecret', '60dd06aa-cf8e-4cf8-8925-6de720015ebf');
-	config.set('foursquareSecret', '2FOV20XOFIE1YJGDPNCEKK4RXU4DP553JTZVAQ2FCXK5YCIY');
-	config.set('foursquareClient', 'OWLZJ2IEM2OTIBIGPCCLGZTRJJTRZ25U0Z553DA1N3DOG5U3');
+	config.set('foursquareClient', keyz.Foursquare.CLIENT_ID);
+	config.set('foursquareSecret', keyz.Foursquare.CLIENT_SECRET);
 
 var twitterMiddleWare = require('./server/lib/twitter-middleware/twitter-middleware')(config, Twitter).getInstance();
 // Get API routes
