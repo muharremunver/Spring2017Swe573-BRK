@@ -23,10 +23,11 @@ var config = require(path.join(__dirname, 'server','lib','config', 'config')).ge
 	config.set('foursquareSecret', '2FOV20XOFIE1YJGDPNCEKK4RXU4DP553JTZVAQ2FCXK5YCIY');
 	config.set('foursquareClient', 'OWLZJ2IEM2OTIBIGPCCLGZTRJJTRZ25U0Z553DA1N3DOG5U3');
 
+var twitterMiddleWare = require('./server/lib/twitter-middleware/twitter-middleware')(config, Twitter).getInstance();
 // Get API routes
 var authRoutes = require('./server/routes/auth/auth')(express).getInstance();
-var palceRoutes = require('./server/routes/place/place')(express, config, request, Twitter).getInstance();
-var twitterRoutes = require('./server/routes/twitter/twitter')(express, Twitter, config).getInstance();
+var palceRoutes = require('./server/routes/place/place')(express, config, request, twitterMiddleWare).getInstance();
+var twitterRoutes = require('./server/routes/twitter/twitter')(express, twitterMiddleWare, config).getInstance();
 
 var api = require('./server/routes/api')(express, authRoutes, palceRoutes, twitterRoutes).getInstance();
 

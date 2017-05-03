@@ -1,4 +1,4 @@
-var TwitterRoute = function(express, Twitter, config){
+var TwitterRoute = function(express, twitterClient, config){
 
   var instance;
 
@@ -15,14 +15,7 @@ var TwitterRoute = function(express, Twitter, config){
         return;
       }
 
-      var client = new Twitter({
-        consumer_key: config.get('consumerKey'),
-        consumer_secret: config.get('consumerSecret'),
-        access_token_key: config.get('accessToken'),
-        access_token_secret: config.get('refreshToken')
-      });
-
-      client.post('statuses/update', {status: req.body.text}, function(error, tweet, response) {
+      twitterClient.post('statuses/update', {status: req.body.text}, function(error, tweet, response) {
         
         if(error) {
 
@@ -53,14 +46,7 @@ var TwitterRoute = function(express, Twitter, config){
         return;
       }
 
-      var client = new Twitter({
-        consumer_key: config.get('consumerKey'),
-        consumer_secret: config.get('consumerSecret'),
-        access_token_key: config.get('accessToken'),
-        access_token_secret: config.get('refreshToken')
-      });
-
-      client.get('users/show', {user_id: req.query.id}, function(error, profile, response) {
+      twitterClient.get('users/show', {user_id: req.query.id}, function(error, profile, response) {
         
         if(error) {
 
@@ -97,20 +83,13 @@ var TwitterRoute = function(express, Twitter, config){
         return;
       }
 
-      var client = new Twitter({
-        consumer_key: config.get('consumerKey'),
-        consumer_secret: config.get('consumerSecret'),
-        access_token_key: config.get('accessToken'),
-        access_token_secret: config.get('refreshToken')
-      });
-
       var query = {
         include_entities: true,
         include_rts: true,
         user_id: req.query.id
       }
 
-      client.get('statuses/user_timeline', query, function(error, tweets, response) {
+      twitterClient.get('statuses/user_timeline', query, function(error, tweets, response) {
     
         if(error) {
 
@@ -161,14 +140,7 @@ var TwitterRoute = function(express, Twitter, config){
         return;
       }
 
-      var client = new Twitter({
-        consumer_key: config.get('consumerKey'),
-        consumer_secret: config.get('consumerSecret'),
-        access_token_key: config.get('accessToken'),
-        access_token_secret: config.get('refreshToken')
-      });
-
-      client.post('friendships/create', {user_id: req.body.id}, function(error, profile, response) {
+      twitterClient.post('friendships/create', {user_id: req.body.id}, function(error, profile, response) {
         
         if(error) {
 

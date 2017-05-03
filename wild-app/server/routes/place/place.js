@@ -1,4 +1,4 @@
-var PlaceRoute = function(express, config, request, Twitter){
+var PlaceRoute = function(express, config, request, twitterClient){
 
   var instance;
 
@@ -67,16 +67,10 @@ var PlaceRoute = function(express, config, request, Twitter){
     // Get tweets of specified place.
     router.get('/places/detail/', (req, res) => {
 
-      var client = new Twitter({
-        consumer_key: config.get('consumerKey'),
-        consumer_secret: config.get('consumerSecret'),
-        access_token_key: config.get('accessToken'),
-        access_token_secret: config.get('refreshToken')
-      });
-
       var query = 'camp OR camping OR nature OR tent OR kamp OR kamping OR trekking OR doğa OR çadır';
       var geocode = req.query.lat +','+ req.query.long +','+ '5km';
-      client.get('search/tweets', {q: query, geocode: geocode}, function(error, tweets, response) {
+
+      twitterClient.get('search/tweets', {q: query, geocode: geocode}, function(error, tweets, response) {
         
         if(error) {
 
@@ -106,30 +100,8 @@ var PlaceRoute = function(express, config, request, Twitter){
                 src: media.media_url,
                 visible: false
               });
-
             });
-
           } 
-          // check instagram photos
-/*          else if (item.source && item.source.indexOf('instagram.com') != -1){
-
-            if(item.entities && item.entities.urls && item.entities.urls.length > 0){
-
-              item.entities.urls.forEach((media) => {
-
-                if(media.expanded_url.indexOf('instagram.com') != -1){
-
-                  retVal.media.push({
-                    src: media.expanded_url,
-                    visible: false
-                  });
-                }
-
-              });
-
-            }
-          }
-*/
         });
 
         res.send({code: 200, message:'SUCCESS', data: retVal});  
