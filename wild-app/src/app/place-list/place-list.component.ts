@@ -1,14 +1,16 @@
-import { Component} from '@angular/core';
+import { Component, ViewContainerRef} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlaceService } from '../services/placeService/place.service';
 import { HttpService, ContentTypes } from '../services/httpService/http.service';
 import { SearchPipe } from '../pipes/search/search.pipe'
 import { SpinnerService } from '../services/spinnerService/spinner.service';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 
 @Component({
   selector: 'app-place-list',
-  templateUrl: './place-list.component.html'
+  templateUrl: './place-list.component.html',
+  providers: [ ToastsManager ]
 })
 export class PlaceListComponent {
 
@@ -23,8 +25,11 @@ export class PlaceListComponent {
 	 * Ctor.
 	 */
     constructor( private route: ActivatedRoute, private router: Router, private placeService: PlaceService, 
-    	private httpService: HttpService, private spinner: SpinnerService) {
+    	private httpService: HttpService, private spinner: SpinnerService, 
+    	private _toastr: ToastsManager, vcr: ViewContainerRef) {
     	
+        this._toastr.setRootViewContainerRef(vcr);
+
     	this._tabs = [
 			{text: 'List', header: 'Places'},
 			{text: 'Map', header: 'Map'},
@@ -51,9 +56,17 @@ export class PlaceListComponent {
 	        // Fetch places.
             let url = '/places?lat=' + this._latitude + '&long=' + this._longitude;
 		    this.httpService.get(url, ContentTypes.JSON).subscribe((result)=> {
+    			
+		    	if(result.code == 200) {
+			      	this._places = result.data;
+		      
+		    	} else {
 
-		      this._places = result.data;
-		      this.spinner.hide();
+		    		this._toastr.error("Something went wrong!","Error!");
+		    	}
+
+		    	this.spinner.hide();
+
 		    });
 	    });
 	}

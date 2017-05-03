@@ -17,14 +17,7 @@ export class PlaceService {
 	 * Returns list of camping areas near specified location.
 	 */
 	getPlaces(latitude:number, longitude: number): Array<any> {
-console.log('gererere')
-/*    let url = '/places?lat=' + latitude + '&long=' + longitude;
 
-    this.httpService.get(url, ContentTypes.JSON).subscribe((result)=> {
-
-      return result.data;
-    });
-*/
 		return new Array<any>();
 	}
 

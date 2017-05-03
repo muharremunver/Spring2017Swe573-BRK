@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpinnerService } from '../services/spinnerService/spinner.service';
 import { HttpService, ContentTypes } from '../services/httpService/http.service';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
+
 
 @Component({
   selector: 'app-place-page',
@@ -22,7 +25,10 @@ export class PlacePageComponent implements OnInit {
 	 * Ctor.
 	 */
     constructor( private route: ActivatedRoute, private router: Router, private spinner: SpinnerService, 
-    	private httpService: HttpService) {}
+    	private httpService: HttpService, private _toastr: ToastsManager, vcr: ViewContainerRef) {
+
+    	this._toastr.setRootViewContainerRef(vcr);
+    }
 
     /**
      *	On init callback.
@@ -55,9 +61,9 @@ export class PlacePageComponent implements OnInit {
     				if(this._images && this._images.length > 0){
     					this._images[0]['visible'] = true;
     				}
+    			} else {
+    				this._toastr.error("Something went wrong!","Error!");
     			}
-
-    			console.log(result)
 
       			this.spinner.hide();
 	    	});
@@ -98,6 +104,9 @@ export class PlacePageComponent implements OnInit {
         this.clickTweetButton();
         this.spinner.show();
 	    this.httpService.post(url, body, ContentTypes.JSON).subscribe((result)=> {
+
+	    	if(result.code != 200)
+	    		this._toastr.error("Something went wrong!","Error!");
 
       		this.spinner.hide();
 	    });

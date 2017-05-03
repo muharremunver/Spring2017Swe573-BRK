@@ -74,7 +74,7 @@ var PlaceRoute = function(express, config, request, Twitter){
         access_token_secret: config.get('refreshToken')
       });
 
-      var query = '';
+      var query = 'camp OR camping OR nature OR tent OR kamp OR kamping OR trekking OR doğa OR çadır';
       var geocode = req.query.lat +','+ req.query.long +','+ '5km';
       client.get('search/tweets', {q: query, geocode: geocode}, function(error, tweets, response) {
         

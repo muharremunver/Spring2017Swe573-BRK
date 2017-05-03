@@ -134,11 +134,14 @@ var TwitterRoute = function(express, Twitter, config){
 
         // filter tweets including camping keywords
         var retval = [];
-
+        var keywords = ['camp','camping','nature','tent','kamp','kamping','trekking','doğa','çadır'];
         tweets.forEach((item) => {
 
-          if(item.text.indexOf('kamp') != -1)
-            retval.push(item);
+          keywords.forEach((keyword) =>{
+
+            if(item.text.indexOf(keyword) != -1)
+              retval.push(item);
+          });
         });
 
 

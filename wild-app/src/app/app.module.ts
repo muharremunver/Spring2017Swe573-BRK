@@ -6,6 +6,8 @@ import { HttpModule } from '@angular/http';
 import { routes } from './app.routes';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import {ToastModule, ToastOptions} from 'ng2-toastr/ng2-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 
@@ -33,10 +35,17 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { TweetPopupComponent } from './tweet-popup/tweet-popup.component';
 
 // Hammer js config
-export class MyHammerConfig extends HammerGestureConfig  {
+export class HammerConfig extends HammerGestureConfig  {
   overrides = <any>{
       'swipe': {velocity: 0.4, threshold: 20}
   }
+}
+
+// Configure toast.
+export class CustomToastOption extends ToastOptions {
+  animate = 'flyRight'; // you can override any options available
+  newestOnTop = false;
+  positionClass = "toast-top-full-width"
 }
 
 
@@ -65,6 +74,8 @@ export class MyHammerConfig extends HammerGestureConfig  {
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB7f8eOx6FUR6s_OeA8KxwHX8-rTrKt1tE'
     }),
+    BrowserAnimationsModule,
+    ToastModule.forRoot()
   ],
   providers: [
     ConfigService,
@@ -74,8 +85,9 @@ export class MyHammerConfig extends HammerGestureConfig  {
     {provide: APP_BASE_HREF, useValue : '/' },
     { 
       provide: HAMMER_GESTURE_CONFIG, 
-      useClass: MyHammerConfig 
-    }
+      useClass: HammerConfig 
+    },
+    {provide: ToastOptions, useClass: CustomToastOption}
   ],
   bootstrap: [AppComponent]
 })
