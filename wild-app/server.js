@@ -10,7 +10,9 @@ const express = require('express'),
 	passport = require('passport'),
 	expressSession = require('express-session'),
 	request = require('request'),
-	keyz = require('../keyz.json');
+	keyz = require('../keyz.json'),
+	_ = require('lodash'),
+	async = require("async");
 
 // Config
 var config = require(path.join(__dirname, 'server','lib','config', 'config')).getConfig();
@@ -29,7 +31,7 @@ var twitterMiddleWare = require('./server/lib/twitter-middleware/twitter-middlew
 // Get API routes
 var authRoutes = require('./server/routes/auth/auth')(express).getInstance();
 var twitterRoutes = require('./server/routes/twitter/twitter')(express, twitterMiddleWare, config).getInstance();
-var palceRoutes = require('./server/routes/place/place')(express, config, request, twitterMiddleWare, twitterRoutes).getInstance();
+var palceRoutes = require('./server/routes/place/place')(express, config, request, twitterMiddleWare, _, async).getInstance();
 
 var api = require('./server/routes/api')(express, authRoutes, palceRoutes, twitterRoutes).getInstance();
 

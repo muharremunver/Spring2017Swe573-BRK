@@ -1,4 +1,4 @@
-var PlaceRoute = function(express, config, request, twitterClient, twitterRoutes){
+var PlaceRoute = function(express, config, request, twitterClient, _, async){
 
   var instance;
 
@@ -88,6 +88,7 @@ var PlaceRoute = function(express, config, request, twitterClient, twitterRoutes
         // make refinement
         var tweets = JSON.parse(response.body).statuses;
         var retVal = {tweets: tweets, media: []};
+        var users = [];
 
         tweets.forEach((item) =>{
 
@@ -101,15 +102,70 @@ var PlaceRoute = function(express, config, request, twitterClient, twitterRoutes
                 visible: false
               });
             });
-          } 
+          }
+
+          // create user list for credibility.
+          if(_.findIndex(users, {'ID': item.user.id}) == -1){
+
+            users.push({
+              ID: item.user.id,
+              credibility: 0
+            });
+          }
+
         });
 
         // Calculate credibility of users and sort tweet array according to result.
+        var keywords = ['camp','camping','nature','tent','kamp','kamping','trekking','doğa','çadır'];
+        
+        async.each(users, (user, callback)=> {
 
+          var profileQuery = {
+            include_entities: true,
+            include_rts: true,
+            user_id: user.ID
+          };
+          twitterClient.get('statuses/user_timeline', profileQuery, function(error, userTweets, response) {
 
-        res.send({code: 200, message:'SUCCESS', data: retVal});  
-        return;
+            if(userTweets.length != undefined){
 
+              userTweets.forEach((userTweet) => {
+
+                keywords.forEach((keyword) =>{
+
+                  if(userTweet.text.indexOf(keyword) != -1)
+                    user.credibility +=1;
+                });
+              });
+              callback(null);
+            } else{
+              callback(null);
+            }
+
+          });
+        }, (err)=> {
+
+          if(err){
+            
+            res.send({code:500, message:'FAIL_SYSTEM', data:err});
+            return;
+          }
+
+          // Set credibility of each tweet.
+          retVal.tweets.forEach((tweet)=> {
+
+            var user = _.find(users, {'ID': tweet.user.id});
+            var credibility = user.credibility;
+            tweet['credibility'] = credibility;
+          });
+
+          // Sort tweets according to their credibility.
+          retVal.tweets = _.orderBy(retVal.tweets, ['credibility'], ['desc']);
+          
+          res.send({code: 200, message:'SUCCESS', data: retVal});  
+          return;
+            
+        });
       });
     });
 
