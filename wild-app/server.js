@@ -42,3 +42,5 @@ var app = require('./server/app/app')(express, bodyParser, expressSession, path,
  * Listen on provided port, on all network interfaces.
  */
 http.createServer(app).listen(app.get('port'), () => console.log(`API running on localhost:${app.get('port')}`));
+
+module.exports = app;
