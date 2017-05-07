@@ -19,6 +19,9 @@
   	<ul class="collection place-collection">
   		<li *ngFor="let comment of _comments" (click)="selectComment(comment)" class="collection-item">
   			{{comment.text}}
+  			<span class="tweet-date">
+  				{{comment.created_at | date :'yMdjm' }}
+  			</span>
   		</li>
     </ul>  	
 

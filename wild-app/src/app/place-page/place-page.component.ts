@@ -55,6 +55,7 @@ export class PlacePageComponent implements OnInit {
     		this.httpService.get(url, ContentTypes.JSON).subscribe((result)=> {
     			
     			if(result.code == 200) {
+    				
     				this._comments = result.data.tweets;
     				this._images = result.data.media;
 
