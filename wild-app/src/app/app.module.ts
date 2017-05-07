@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {APP_BASE_HREF} from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { routes } from './app.routes';
 import { AgmCoreModule } from 'angular2-google-maps/core';
@@ -72,10 +72,13 @@ export class CustomToastOption extends ToastOptions {
     HttpModule,
     routes,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyB7f8eOx6FUR6s_OeA8KxwHX8-rTrKt1tE'
+      apiKey: 'AIzaSyB7f8eOx6FUR6s_OeA8KxwHX8-rTrKt1tE',
+      libraries: ["places"]
+
     }),
     BrowserAnimationsModule,
-    ToastModule.forRoot()
+    ToastModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [
     ConfigService,

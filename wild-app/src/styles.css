@@ -115,7 +115,25 @@ body{
 	margin-left: 5%!important;
 	z-index: 9999;
 	margin-top: 2%!important;
+
 }
+.map-search ::-webkit-input-placeholder {
+    color: #000;
+    opacity: 1 !important; /* for older chrome versions. may no longer apply. */
+}
+.map-search :-moz-placeholder { /* Firefox 18- */
+    color: #000;
+    opacity: 1 !important;
+}
+.map-search ::-moz-placeholder {  /* Firefox 19+ */
+    color: #000;
+    opacity: 1 !important;
+}
+.map-search :-ms-input-placeholder {  
+   color: #000;
+}
+
+
 
 
 /*-------------

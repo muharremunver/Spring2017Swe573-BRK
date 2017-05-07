@@ -2,7 +2,7 @@
 	<div class="form-group">
 		<div class="input-field  s12 search-container map-search">
 			<i class="material-icons prefix">search</i>
-          	<input type="text" class="validate search-input" [(ngModel)]="searchValue" placeholder="Search...">
+          	<input type="text" class="validate search-input" [(ngModel)]="searchValue" placeholder="Search..." #searchElem>
             <i class="material-icons prefix" (click)="searchValue = ''" *ngIf="searchValue">close</i>
         </div>
   	</div>

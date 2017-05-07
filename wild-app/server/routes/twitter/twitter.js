@@ -50,17 +50,17 @@ var TwitterRoute = function(express, twitterClient, config){
         
         if(error) {
 
+          if(response.body.code == 50) {
+            
+            res.send({code:404, message:'USER_NOT_FOUND'});
+            return; 
+          }
+          
           if(error.stack) {
             
             console.log(error.stack);
             res.send({code:500, message:'FAIL_SYSTEM', data:error.message});
             return;
-          }
-
-          if(response.body.code == 50) {
-
-            res.send({code:404, message:'USER_NOT_FOUND'});
-            return; 
           }
 
           res.send({code:500, message:'FAIL_SYSTEM', data:error});

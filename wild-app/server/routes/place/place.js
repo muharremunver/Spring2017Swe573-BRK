@@ -1,4 +1,4 @@
-var PlaceRoute = function(express, config, request, twitterClient){
+var PlaceRoute = function(express, config, request, twitterClient, twitterRoutes){
 
   var instance;
 
@@ -64,7 +64,7 @@ var PlaceRoute = function(express, config, request, twitterClient){
       });
     });
 
-    // Get tweets of specified place.
+    // Get tweets of specified place from Twitter.
     router.get('/places/detail/', (req, res) => {
 
       var query = 'camp OR camping OR nature OR tent OR kamp OR kamping OR trekking OR doğa OR çadır';
@@ -104,12 +104,14 @@ var PlaceRoute = function(express, config, request, twitterClient){
           } 
         });
 
+        // Calculate credibility of users and sort tweet array according to result.
+
+
         res.send({code: 200, message:'SUCCESS', data: retVal});  
         return;
 
       });
     });
-
 
     return router;
   }
