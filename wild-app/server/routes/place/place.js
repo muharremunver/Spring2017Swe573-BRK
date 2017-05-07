@@ -67,6 +67,12 @@ var PlaceRoute = function(express, config, request, twitterClient, _, async){
     // Get tweets of specified place from Twitter.
     router.get('/places/detail/', (req, res) => {
 
+      if(!req.query.lat || !req.query.long) {
+
+        res.send({code:500, message:'Place location must be provided!'});
+        return;
+      }
+      
       var query = 'camp OR camping OR nature OR tent OR kamp OR kamping OR trekking OR doğa OR çadır';
       var geocode = req.query.lat +','+ req.query.long +','+ '5km';
 
