@@ -1,5 +1,6 @@
 var chai = require('chai'),
 	chaiHttp = require('chai-http'),
+	assert = chai.assert,
 	app = require('../../app/app.spec');
 
 
@@ -15,23 +16,20 @@ var chai = require('chai'),
 
 		it('it should return 500 if body is empty.', (done) => {
 
-			/*
-			 * code = 500
-			 * message = Request body cannot be null!
-			 * should not have data property
-			 */
-
-		});
-
-
-		it('it should post tweet.', (done) => {
-			
-			/*
-			 * code = 200
-			 * message = SUCCESS
-			 * should not have data prop.
-			 */
-
+			chai.request(app)
+			.post('/api/twitter/send')
+		  	.send({})
+		    .end((err, res) => {
+		
+      			res.body.should.be.a('object');
+      			res.body.should.have.property('code');
+      			res.body.should.have.property('message');
+      			res.body.should.not.have.property('data');
+      			assert.equal(res.body.code, '500');
+      			assert.equal(res.body.message, 'Request body cannot be null!');
+      
+		    	done();
+		    });
 
 		});		
 
@@ -45,27 +43,44 @@ var chai = require('chai'),
 
 		it('it should return 500 if id parameter is not provided in query.', (done) => {
 
-			/*
-			 * code = 500
-			 * message = User id must be provided!
-			 * should not have data property
-			 */
+			chai.request(app)
+			.get('/api/twitter/profile')
+		    .end((err, res) => {
+		
+      			res.body.should.be.a('object');
+      			res.body.should.have.property('code');
+      			res.body.should.have.property('message');
+      			res.body.should.not.have.property('data');
+      			assert.equal(res.body.code, '500');
+      			assert.equal(res.body.message, 'User id must be provided!');
+      
+		    	done();
+		    });
 
 		});
 
 
 		it('it should return profile information of user.', (done) => {
-			
-			/*
-			 * code = 200
-			 * message = SUCCESS
-			 * data must be array
-			 * data should include id prop
-			 * data should include profile pic
-			 * data should include name
-			 * data should include full name
-			 */
 
+			chai.request(app)
+			.get('/api/twitter/profile?id=2174258325')
+		    .end((err, res) => {
+
+      			res.body.should.be.a('object');
+      			res.body.should.have.property('code');
+      			res.body.should.have.property('message');
+      			res.body.should.have.property('data');
+      			res.body.data.should.be.a('object');
+      			res.body.data.should.have.property('id');
+      			res.body.data.should.have.property('name');
+      			res.body.data.should.have.property('name');
+      			res.body.data.should.have.property('screen_name');
+      			res.body.data.should.have.property('profile_image_url');
+      			assert.equal(res.body.code, '200');
+      			assert.equal(res.body.message, 'SUCCESS');
+      
+		    	done();
+		    });			
 
 		});		
 
@@ -79,22 +94,39 @@ var chai = require('chai'),
 
 		it('it should return 500 if id parameter is not provided in query.', (done) => {
 
-			/*
-			 * code = 500
-			 * message = User id must be provided!
-			 * should not have data property
-			 */
+			chai.request(app)
+			.get('/api/twitter/profile/tweets')
+		    .end((err, res) => {
+		
+      			res.body.should.be.a('object');
+      			res.body.should.have.property('code');
+      			res.body.should.have.property('message');
+      			res.body.should.not.have.property('data');
+      			assert.equal(res.body.code, '500');
+      			assert.equal(res.body.message, 'User id must be provided!');
+      
+		    	done();
+		    });
 
 		});
 
 
 		it('it should return list of tweets posted by user.', (done) => {
-			
-			/*
-			 * code = 200
-			 * message = SUCCESS
-			 * data must be array
-			 */
+
+			chai.request(app)
+			.get('/api/twitter/profile/tweets?id=2174258325')
+		    .end((err, res) => {
+
+      			res.body.should.be.a('object');
+      			res.body.should.have.property('code');
+      			res.body.should.have.property('message');
+      			res.body.should.have.property('data');
+      			res.body.data.should.be.a('array');
+      			assert.equal(res.body.code, '200');
+      			assert.equal(res.body.message, 'SUCCESS');
+      
+		    	done();
+		    });			
 
 		});		
 
@@ -108,27 +140,21 @@ var chai = require('chai'),
 
 		it('it should return 500 if id parameter is not provided on body.', (done) => {
 
-			/*
-			 * code = 500
-			 * message = User id must be provided!
-			 * should not have data property
-			 */
+			chai.request(app)
+			.post('/api/twitter/follow')
+		  	.send({})
+		    .end((err, res) => {
 
-		});
+      			res.body.should.be.a('object');
+      			res.body.should.have.property('code');
+      			res.body.should.have.property('message');
+      			res.body.should.not.have.property('data');
+      			assert.equal(res.body.code, '500');
+      			assert.equal(res.body.message, 'User id must be provided!');
+      
+		    	done();
+		    });
 
-
-		it('it should return profile information of followed user.', (done) => {
-			
-			/*
-			 * code = 200
-			 * message = SUCCESS
-			 * data must be array
-			 * data should include id prop
-			 * data should include profile pic
-			 * data should include name
-			 * data should include full name
-			 */
-
-		});		
+		});	
 
 	});		
