@@ -60,17 +60,19 @@ echo "Instaling Nginx"
 sudo apt-get install nginx
 echo "Finished installing Nginx"
 
-
-#Install PM2.
+# Install PM2.
 echo "Installing PM2"
 sudo npm install pm2 -g
 echo "Finished installing PM2"
 
-#Install angular commandline interface.
+# Install angular commandline interface.
 echo "Installing Angular CLI"
 npm install -g @angular/cli
 echo "Finished installing Angular CLI"
 
 
-#Set permissions
+# Set permissions
 chmod 700 ~/.ssh/id_rsa
+
+# Run Nginx as deamon.
+sudo service nginx start
